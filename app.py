@@ -20,9 +20,15 @@ def init():
 def index(message):
     return render_template('index.html', message = message)
 
+## endpoint to render nlp.html
 @app.route('/nlp')
 def view_nlp():
     return render_template('indexNLP.html')
+
+## endpoint to render indexImages.html
+@app.route('/image')
+def view_images():
+    return render_template('indexImages.html')
 
 ## ------------------------- API endpoints -----------------------------------------------
 
@@ -43,7 +49,19 @@ def get_all_text():
     message = "No se recibieron datos prompt"
     return render_template("index.html", message=message)
 
-## ------------------------- openAI API --------------------------------------------------
+## to create an image
+@app.route("/create_image",methods=("GET","POST"))
+def get_image():
+    if request.method == "POST":
+        prompt = request.form["prompt"]
+        ## results from openAI API methods
+        create_result = create_image(prompt)
+        ## Rendering page
+        return render_template('indexImages.html',create_result=create_result, prompt=prompt)
+    message = "No se recibieron datos prompt"
+    return render_template("index.html", message=message)
+    
+## ------------------------- openAI API text--------------------------------------------------
 ## model ada
 def generate_response_ada(prompt):
     response = openai.Completion.create(
@@ -91,6 +109,19 @@ def generate_response_davinci(prompt):
 ## generate prompt
 def generate_prompt(animal):
     return """Who wrote Odysseus?"""
+
+
+## ------------------------- openAI API Images-------------------------------------------------
+
+def create_image(prompt):
+    response = openai.Image.create(
+        prompt=prompt,
+        n=1,
+        size="256x256"
+    )
+    return response['data'][0]['url']
+
+
 
 ## ------------------------- app start ----------------------------------------------------
 if __name__ == '__main__':
