@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 {% block title %}
 {{ super() }}
-Procesamiento de lenguaje natural
+Imagenes
 {% endblock title %}
 {% block content %}
 {% if message %}
@@ -16,17 +16,18 @@ Procesamiento de lenguaje natural
     </div>
     <div class="jumbotron my-4">
         <div class="container">
+            <h2>Creaci&oacute;n de imagenes</h2>
             <div class="row text-justiy">
                 <p class="parragraph" style="font-size: 12px;">Esta es la forma base de la IA generativa actual, pues
                     permite realizar imagenes a partir a entradas
                     que realicemos (prompt) para la API de la IA, su principal algoritmo es el Transformer pues lo
                     utiliza para entender el contexto de la entrada que le brinde el usuario, y para la generación de imagenes 
-                    utiliza redes GAN y el algoritmo CLIIP.</p>
+                    utiliza redes GAN y el algoritmo CLIP.</p>
                 <form action="/create_image" method="POST">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"
-                                placeholder="Escribe algo que quieras hacer con DALL-E" name="prompt" required>
+                                placeholder="Escribe algo que quieras crear con DALL-E" name="prompt" required>
                             <button class="btn btn-outline-secondary" type="submit">Enviar</button>
                         </div>
                     </div>
@@ -42,6 +43,67 @@ Procesamiento de lenguaje natural
                     </a>        
                 </picture>
 
+            {% endif %}
+        </div>
+    </div>
+    <div class="jumbotron my-4">
+        <div class="container">
+            <h2>Edici&oacute;n de imagenes</h2>
+            <div class="row text-justiy">
+                <p class="parragraph" style="font-size: 12px;">Este endpoint de OpenAI permite editar imagenes
+                    basados en un prompt o entrada que especifique el usuario, hay que tener en cuenta que 
+                    la imagen debe tener un peso menor a 4mb y las dimensiones deben ser iguales que las de la salida
+                     (en este caso seria de 256 * 256 px) y formato .png</p>
+                <form action="/edit_image" method="POST" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control"
+                                placeholder="Escribe algo que quieras cambiar a la foto con DALL-E" name="prompt" required>
+                                        <input type="file" class="form-control-file btn btn-info normal" id="img" name="img"
+                                            required />
+                            <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if edit_result %}
+            <span>Respuesta a: <b><i> {{ prompt }} </i></b></span>
+            </br>
+            <h3>Imagen obtenida por DALL-E</h3>
+                <picture class="">
+                    <source srcset="" type="image/svg+xml">
+                        <img src="{{edit_result}}" class="img-fluid img-thumbnail" width="256" height="256">
+                    </a>        
+                </picture>
+            {% endif %}
+        </div>
+    </div>
+    <div class="jumbotron my-4">
+        <div class="container">
+            <h2>Variaci&oacute;n de imagenes</h2>
+            <div class="row text-justiy">
+                <p class="parragraph" style="font-size: 12px;">Este endpoint de OpenAI permite generar una variacion
+                    de una imagen dada, al igual que en el anterior, las dimensiones deben ser iguales
+                     (en este caso seria de 256 * 256 px) y formato .png</p>
+                <form action="/variate_image" method="POST" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control-file btn btn-info normal" id="img" name="img"
+                                            required />
+                            <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if variate_result %}
+            <span><b><i> variaci&oacute;n </i></b></span>
+            </br>
+            <h3>Imagen obtenida por DALL-E</h3>
+                <picture class="">
+                    <source srcset="" type="image/svg+xml">
+                        <img src="{{variate_result}}" class="img-fluid img-thumbnail" width="256" height="256">
+                    </a>        
+                </picture>
             {% endif %}
         </div>
     </div>

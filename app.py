@@ -2,11 +2,16 @@
 import os
 import openai
 from config import DevelopmentConfig
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
 
 # server config
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# global
+UPLOAD_FOLDER = '/static/images'
+ALLOWED_EXTENSIONS = {'png'}
 
 ## ------------------------- view endpoints ----------------------------------------------
 
@@ -60,6 +65,58 @@ def get_image():
         return render_template('indexImages.html',create_result=create_result, prompt=prompt)
     message = "No se recibieron datos prompt"
     return render_template("index.html", message=message)
+
+## to edit an image
+@app.route("/edit_image", methods=['POST'])
+def get_edit_image():
+    # if post
+    if request.method == 'POST':
+        # request files from post
+        file = request.files['img']
+        # if allowed file validation and file exists
+        if file and allowed_file(file.filename):
+            # save name of file
+            filename = secure_filename(file.filename)
+            # save file in folder
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+            # get prompt
+            prompt = request.form["prompt"]
+            # path image
+            image = "static/images/"+filename
+            # API openAI edit image
+            edit_result = edit_image(prompt, image)
+            ## Rendering page
+            return render_template('indexImages.html',edit_result = edit_result, prompt = prompt)
+        else:
+            message = "Tipo de archivo no permitido"
+            return index(message)  
+    message = "No se recibieron datos prompt"
+    return render_template("index.html", message=message)
+
+## to variate an image
+@app.route("/variate_image", methods=["POST"])
+def get_variated_image():
+    #if post
+    if request.method == 'POST':
+        # request files from post
+        file = request.files['img']
+        # if allowed file validation and file exists
+        if file and allowed_file(file.filename):
+            # save name of file
+            filename = secure_filename(file.filename)
+            # save file in folder
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+             # path image
+            image = "static/images/"+filename
+            # API openAI variate image
+            variate_result = variate_image(image)
+            ## Rendering page
+            return render_template('indexImages.html',variate_result = variate_result)
+        else:
+            message = "Tipo de archivo no permitido"
+            return index(message)  
+    message = "Algo sucedio"
+    return render_template("index.html", message=message)
     
 ## ------------------------- openAI API text--------------------------------------------------
 ## model ada
@@ -110,9 +167,9 @@ def generate_response_davinci(prompt):
 def generate_prompt(animal):
     return """Who wrote Odysseus?"""
 
-
 ## ------------------------- openAI API Images-------------------------------------------------
 
+## create image
 def create_image(prompt):
     response = openai.Image.create(
         prompt=prompt,
@@ -121,7 +178,32 @@ def create_image(prompt):
     )
     return response['data'][0]['url']
 
+## edit image
+def edit_image(prompt, image):
+    response = openai.Image.create_edit(
+        image=open(image, "rb"),
+        mask=open(image, "rb"),
+        prompt=prompt,
+        n=1,
+        size="256x256"
+    )
+    return response['data'][0]['url']
 
+## variate image
+def variate_image(image):
+    response = openai.Image.create_variation(
+        image=open(image, "rb"),
+        n=1,
+        size="256x256"
+    )
+    return response['data'][0]['url']
+
+## -------------------------- services validation -----------------------------------------
+
+## file validation
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS    
 
 ## ------------------------- app start ----------------------------------------------------
 if __name__ == '__main__':
