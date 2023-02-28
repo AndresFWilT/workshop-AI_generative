@@ -11,7 +11,7 @@ Imagenes
 {% endif %}
 <div class="card text-center">
     <div class="card-header">
-        <h1 class="text-uppercase"><b>Inteligencia artificial: Procesamiento de imagenes </b></h1>
+        <h1 class="text-uppercase"><b>Inteligencia artificial: Procesamiento de imagenes con Dall-e 2 </b></h1>
         <i>Creaci&oacute;n de imagenes a partir de lenguaje natural</i>
     </div>
     <div class="jumbotron my-4">
@@ -23,7 +23,7 @@ Imagenes
                     que realicemos (prompt) para la API de la IA, su principal algoritmo es el Transformer pues lo
                     utiliza para entender el contexto de la entrada que le brinde el usuario, y para la generación de imagenes 
                     utiliza redes GAN y el algoritmo CLIP.</p>
-                <form action="/create_image" method="POST">
+                <form action="/dall_e2_create_image" method="POST">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"
@@ -39,10 +39,10 @@ Imagenes
             <h3>Imagen obtenida por DALL-E</h3>
                 <picture class="">
                     <source srcset="" type="image/svg+xml">
+                    <a href="{{create_result}}" download="imagen_creada.jpg">
                         <img src="{{create_result}}" class="img-fluid img-thumbnail" width="256" height="256">
-                    </a>        
+                    </a>
                 </picture>
-
             {% endif %}
         </div>
     </div>
@@ -54,7 +54,7 @@ Imagenes
                     basados en un prompt o entrada que especifique el usuario, hay que tener en cuenta que 
                     la imagen debe tener un peso menor a 4mb y las dimensiones deben ser iguales que las de la salida
                      (en este caso seria de 256 * 256 px) y formato .png</p>
-                <form action="/edit_image" method="POST" enctype="multipart/form-data">
+                <form action="/dall_e2_edit_image" method="POST" enctype="multipart/form-data">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"
@@ -85,7 +85,7 @@ Imagenes
                 <p class="parragraph" style="font-size: 12px;">Este endpoint de OpenAI permite generar una variacion
                     de una imagen dada, al igual que en el anterior, las dimensiones deben ser iguales
                      (en este caso seria de 256 * 256 px) y formato .png</p>
-                <form action="/variate_image" method="POST" enctype="multipart/form-data">
+                <form action="/dall_e2_variate_image" method="POST" enctype="multipart/form-data">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control-file btn btn-info normal" id="img" name="img"

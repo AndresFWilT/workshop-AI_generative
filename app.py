@@ -25,21 +25,21 @@ def init():
 def index(message):
     return render_template('index.html', message = message)
 
-## endpoint to render nlp.html
-@app.route('/nlp')
-def view_nlp():
-    return render_template('indexNLP.html')
+## endpoint to render indexNLP_GPT3.html
+@app.route('/gpt3')
+def view_gpt3():
+    return render_template('indexNLP_GPT3.html')
 
-## endpoint to render indexImages.html
-@app.route('/image')
-def view_images():
-    return render_template('indexImages.html')
+## endpoint to render indexImages_dalle2.html
+@app.route('/dall-e2')
+def view_dall_e2():
+    return render_template('indexImages_dalle2.html')
 
 ## ------------------------- API endpoints -----------------------------------------------
 
 ## to use all Open AI models
-@app.route("/generate_all_text", methods=("GET", "POST"))
-def get_all_text():
+@app.route("/gpt3_generate_all_text", methods=("GET", "POST"))
+def get_gpt3_all_text():
     if request.method == "POST":
         prompt = request.form["prompt"]
         ## results from openAI API methods
@@ -50,25 +50,25 @@ def get_all_text():
             "result_davinci": generate_response_davinci(prompt)
         }
         ## rendering page
-        return render_template('indexNLP.html', complete_result = complete_result, prompt = prompt)
+        return render_template('indexNLP_GPT3.html', complete_result = complete_result, prompt = prompt)
     message = "No se recibieron datos prompt"
     return render_template("index.html", message=message)
 
 ## to create an image
-@app.route("/create_image",methods=("GET","POST"))
-def get_image():
+@app.route("/dall_e2_create_image",methods=("GET","POST"))
+def get_dall_e2_image():
     if request.method == "POST":
         prompt = request.form["prompt"]
         ## results from openAI API methods
-        create_result = create_image(prompt)
+        create_result = dalle2_create_image(prompt)
         ## Rendering page
-        return render_template('indexImages.html',create_result=create_result, prompt=prompt)
+        return render_template('indexImages_dalle2.html',create_result=create_result, prompt=prompt)
     message = "No se recibieron datos prompt"
     return render_template("index.html", message=message)
 
 ## to edit an image
-@app.route("/edit_image", methods=['POST'])
-def get_edit_image():
+@app.route("/dall_e2_edit_image", methods=['POST'])
+def get_dall_e2_edit_image():
     # if post
     if request.method == 'POST':
         # request files from post
@@ -84,9 +84,9 @@ def get_edit_image():
             # path image
             image = "static/images/"+filename
             # API openAI edit image
-            edit_result = edit_image(prompt, image)
+            edit_result = dalle2_edit_image(prompt, image)
             ## Rendering page
-            return render_template('indexImages.html',edit_result = edit_result, prompt = prompt)
+            return render_template('indexImages_dalle2.html',edit_result = edit_result, prompt = prompt)
         else:
             message = "Tipo de archivo no permitido"
             return index(message)  
@@ -94,8 +94,8 @@ def get_edit_image():
     return render_template("index.html", message=message)
 
 ## to variate an image
-@app.route("/variate_image", methods=["POST"])
-def get_variated_image():
+@app.route("/dall_e2_variate_image", methods=["POST"])
+def get_dall_e2_variated_image():
     #if post
     if request.method == 'POST':
         # request files from post
@@ -109,9 +109,9 @@ def get_variated_image():
              # path image
             image = "static/images/"+filename
             # API openAI variate image
-            variate_result = variate_image(image)
+            variate_result = dalle2_variate_image(image)
             ## Rendering page
-            return render_template('indexImages.html',variate_result = variate_result)
+            return render_template('indexImages_dalle2.html',variate_result = variate_result)
         else:
             message = "Tipo de archivo no permitido"
             return index(message)  
@@ -170,7 +170,7 @@ def generate_prompt(animal):
 ## ------------------------- openAI API Images-------------------------------------------------
 
 ## create image
-def create_image(prompt):
+def dalle2_create_image(prompt):
     response = openai.Image.create(
         prompt=prompt,
         n=1,
@@ -179,7 +179,7 @@ def create_image(prompt):
     return response['data'][0]['url']
 
 ## edit image
-def edit_image(prompt, image):
+def dalle2_edit_image(prompt, image):
     response = openai.Image.create_edit(
         image=open(image, "rb"),
         mask=open(image, "rb"),
@@ -190,7 +190,7 @@ def edit_image(prompt, image):
     return response['data'][0]['url']
 
 ## variate image
-def variate_image(image):
+def dalle2_variate_image(image):
     response = openai.Image.create_variation(
         image=open(image, "rb"),
         n=1,
