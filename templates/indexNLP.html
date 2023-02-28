@@ -1,0 +1,60 @@
+{% extends "base/base.html" %}
+{% block title %}
+{{ super() }}
+Procesamiento de lenguaje natural
+{% endblock title %}
+{% block content %}
+{% if message %}
+<div class="card-body btn-info">
+    <p class="text-center text-light">{{ message }}</p>
+</div>
+{% endif %}
+<div class="card text-center">
+    <div class="card-header">
+        <h1 class="text-uppercase"><b>Inteligencia artificial: Procesamiento de lenguaje natural (NLP)</b></h1>
+        <i>Creaci&oacute;n de textos, instrucciones, analisis semantico, traducciones y demas</i>
+    </div>
+    <div class="jumbotron my-4">
+        <div class="container">
+            <div class="row text-justiy">
+                <p class="parragraph" style="font-size: 12px;">Esta es la forma base de la IA generativa actual, pues
+                    permite realizar NLP a entradas
+                    que realicemos (prompt) para la API de la IA, su principal algoritmo es el Transformer pues lo
+                    utiliza para entender el contexto de la entrada que le brinde el usuario.</p>
+                <form action="/generate_all_text" method="POST">
+                    <div class="container">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control"
+                                placeholder="Escribe algo que quieras hacer con GPT-3" name="prompt" required>
+                            <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if complete_result %}
+            <span>Respuesta a: <b><i> {{ prompt }} </i></b></span>
+            </br>
+            <h3>Lenguajes de modelo disponibles de OpenAI</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ada</th>
+                        <th scope="col">Babbage</th>
+                        <th scope="col">Curie</th>
+                        <th scope="col">Davinci</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><p style="font-size: 11px">{{ complete_result["result_ada"] }}</p></th>
+                        <td><p style="font-size: 11px">{{ complete_result["result_babbage"] }}</p></td>
+                        <td><p style="font-size: 11px">{{ complete_result["result_curie"] }}</p></td>
+                        <td><p style="font-size: 11px">{{ complete_result["result_davinci"] }}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content%}

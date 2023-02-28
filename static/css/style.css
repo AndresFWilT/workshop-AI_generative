@@ -1,0 +1,184 @@
+nav.mainNavbar{
+    background:  #181d35;
+}
+
+a.main{
+    background:#ed1c27;
+    color: white;
+    font-size: 32px;
+}
+
+p.navText{
+    color: white;
+    font-size:32px;
+    text-transform: uppercase;
+}
+
+a.mainToogle{
+    color: white;
+    font-size: 32px;
+}
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('images/pageLoader.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+
+div.form{
+    width: 55rem; 
+    margin: auto;
+}
+
+input.normal{
+    width: 75%;
+    margin:auto;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+select.normal{
+    width: 75%;
+    margin:auto;
+}
+
+hr.line{
+    display:block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    border-style: inset;
+    border-width: 1px;
+    color: #8c1919;
+}
+  
+figure:after {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    color: #fff;
+    content: attr(title);
+    opacity: 0;
+    padding: 6px 12px;
+    position: absolute;
+    top: 30px;
+    transition: all .25s ease;
+    visibility: hidden;
+    white-space: nowrap;
+}
+  
+figure[tooltip-dir="left"]:after {
+    left: auto;
+    right: 110%;
+}
+  
+figure[tooltip-dir="bottom"]:after,
+figure[tooltip-dir="top"]:after {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+}
+  
+figure[tooltip-dir="bottom"]:after {
+    bottom: auto;
+    top: 110%;
+}
+  
+figure[tooltip-dir="top"]:after {
+    bottom: 55%;
+    top: auto;
+}
+  
+figure:hover:after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+h6.artist{
+    margin-top:1px;
+    margin-bottom:1px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p.parragraph{
+    font-size: 11px;
+    margin-bottom:2px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+}
+
+button.button{
+    margin-top:5px;
+}
+
+.artist_profile{
+    text-align: center;
+    height: 300px;
+    padding: 12px;
+    background-image: url(https://besthqwallpapers.com/Uploads/20-11-2018/72124/thumb2-red-abstract-background-lines-art-red-backgrounds.jpg);
+    
+
+}
+.avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+.user_name{
+    font-size: 60px;
+    margin-top: 14px;
+    color: #f3f3f3;
+
+}
+.social{
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+.social li{
+    display: inline-block;
+    margin: 5px;
+
+}
+
+.icon{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.about{
+    padding: 10px;
+}
+.about h3 {
+    color: black;
+    font-size: 30px;
+
+}
+
+.form{
+    width: 450px;
+    margin: auto;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border-radius: 20px;
+
+}
+
+.textarea{
+    min-height: 100px;
+    max-height: 200px;
+}
+
+i.icono_grande{
+    font-size: 64px;
+    color: #f3f3f3;
+}

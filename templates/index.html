@@ -1,21 +1,30 @@
-<!DOCTYPE html>
-<head>
-  <title>OpenAI Quickstart</title>
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='dog.png') }}"
-  />
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-</head>
-
-<body>
-  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-  <h3>Name my pet</h3>
-  <form action="/" method="post">
-    <input type="text" name="animal" placeholder="Enter an animal" required />
-    <input type="submit" value="Generate names" />
-  </form>
-  {% if result %}
-  <div class="result">{{ result }}</div>
-  {% endif %}
-</body>
+{% extends "base/base.html" %}
+{% block title %}
+{{ super() }}
+Bienvenido
+{% endblock title %}
+{% block content %}
+{% if message %}
+<div class="card-body btn-info">
+  <p class="text-center text-light">{{ message }}</p>
+</div>
+{% endif %}
+<div class="card text-center">
+  <div class="card-header">
+    <h1 class="text-uppercase"><b>Inteligencia artificial: Generativa</b></h1>
+    <i>Creaci&oacute;n en lugar de reconocimiento de patrones o produccion de resultados.</i>
+  </div>
+  <div class="jumbotron my-4">
+    <div class="container">
+      <div class="row text-center">
+        <p class="parragraph" style="font-size: 12px;">La inteligencia artificial (IA) generativa, permite describir algoritmos
+          utilizados para crear nuevos datos que pueden parecer contenido generados por humanos: audio, codigo, texto,
+          imagenes, simulaciones y videos. Sus data set consta de contenido e informacion existente, a pesar de todo el revuelo
+          mediatico de la actualidad, es una tecnologia antigua, pues se ha implementado para crear juegos, chatbots y demas. Hace parte
+          de la categoria Machine learning y es importante tener en cuenta, que a dia de hoy, en su gran mayoria la IA generativa, utiliza
+        procesamiento de lenguaje natural (NLP), por lo que es muy comun que utilicen NPL transformer en sus modelos de IA.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}
