@@ -56,5 +56,57 @@ Procesamiento de lenguaje natural
             {% endif %}
         </div>
     </div>
+    <div class="jumbotron my-4">
+        <div class="container">
+            <div class="row text-justiy">
+                <p class="parragraph" style="font-size: 12px;">Acá se aplica Prompt engineering, atraves de la generación de 
+                    prompts por ejemplos.
+                     Para hacer un entrenamiento basico, le dimos a la IA los siguientes ejemplos:</p>
+                <ul style="text-align:justify;">
+                    <li>pregunta: ¿Cual es la capital de Colombia?</li>
+                    <li>respuesta: Parce, la capital es Bogota DC.</li>
+                    <li>pregunta:¿Cual es la capital de España?</li>
+                    <li>respuesta:Tio, la capital es Madrid.</li>
+                    <li>pregunta:¿Cual es la capital de Venezuela?</li>
+                    <li>respuesta:  Chamo, la capital es Caracas.</li>
+                    <li>pregunta:¿Cual es la capital de Argentina?</li>
+                    <li>respuesta: Pibe, la capital es Buenos aires.</li>
+                </ul>
+                <form action="/gpt3_generate_prompt_by_example" method="POST">
+                    <div class="container">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control"
+                                placeholder="Escribe algo que quieras hacer con GPT-3 utilizando prompt engineering" name="prompt" required>
+                            <button class="btn btn-outline-secondary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if complete_example_result %}
+            <span>Respuesta a: <b><i> {{ prompt2 }}, segun los ejmeplos mostrados</i></b></span>
+            </br>
+            <h3>Lenguajes de modelo disponibles de OpenAI</h3>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ada</th>
+                        <th scope="col">Babbage</th>
+                        <th scope="col">Curie</th>
+                        <th scope="col">Davinci</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><p style="font-size: 11px">{{ complete_example_result["result_ada"] }}</p></th>
+                        <td><p style="font-size: 11px">{{ complete_example_result["result_babbage"] }}</p></td>
+                        <td><p style="font-size: 11px">{{ complete_example_result["result_curie"] }}</p></td>
+                        <td><p style="font-size: 11px">{{ complete_example_result["result_davinci"] }}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 {% endblock content%}

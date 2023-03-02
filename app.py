@@ -54,6 +54,25 @@ def get_gpt3_all_text():
     message = "No se recibieron datos prompt"
     return render_template("index.html", message=message)
 
+##Generate response by prompt by example
+@app.route("/gpt3_generate_prompt_by_example", methods=("GET", "POST"))
+def get_gpt3_response_by_prompt_example():
+    if request.method == "POST":
+        prompt2 = request.form["prompt"]
+        prompt= generate_prompt_by_example(prompt2)
+        ## results from openAI API methods
+        complete_example_result = {
+            "result_ada": generate_response_ada(prompt),
+            "result_babbage": generate_response_babbage(prompt),
+            "result_curie": generate_response_curie(prompt),
+            "result_davinci": generate_response_davinci(prompt)
+        }
+        ## rendering page
+        return render_template('indexNLP_GPT3.html', complete_example_result = complete_example_result, prompt2 = prompt2)
+    message = "No se recibieron datos prompt"
+    return render_template("index.html", message=message)
+
+
 ## to create an image
 @app.route("/dall_e2_create_image",methods=("GET","POST"))
 def get_dall_e2_image():
@@ -163,9 +182,20 @@ def generate_response_davinci(prompt):
     )
     return response.choices[0].text
 
-## generate prompt
-def generate_prompt(animal):
-    return """Who wrote Odysseus?"""
+## generate prompt by example
+def generate_prompt_by_example(direct_prompt):
+    return """pregunta: ¿Cual es la capital de Colombia?
+        respuesta: Parce, la capital es Bogota DC.
+        pregunta:¿Cual es la capital de España?
+        respuesta:Tio, la capital es Madrid.
+        pregunta:¿Cual es la capital de Venezuela?
+        respuesta:  Chamo, la capital es Caracas.
+        pregunta:¿Cual es la capital de Argentina?
+        respuesta: Pibe, la capital es Buenos aires.
+        pregunta: {}
+        respuesta:""".format(
+                direct_prompt.capitalize()
+            )
 
 ## ------------------------- openAI API Images-------------------------------------------------
 
