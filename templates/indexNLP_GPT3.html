@@ -21,7 +21,7 @@ Procesamiento de lenguaje natural
                     permite realizar NLP a entradas
                     que realicemos (prompt) para la API de la IA, su principal algoritmo es el Transformer pues lo
                     utiliza para entender el contexto de la entrada que le brinde el usuario.</p>
-                <form action="/gpt3_generate_all_text" method="POST">
+                <form action="/gpt3_generate_response_direct_prompt" method="POST">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"
@@ -62,7 +62,7 @@ Procesamiento de lenguaje natural
                 <p class="parragraph" style="font-size: 12px;">Acá se aplica Prompt engineering, atraves de la generación de 
                     prompts por ejemplos.
                      Para hacer un entrenamiento basico, le dimos a la IA los siguientes ejemplos:</p>
-                <ul style="text-align:justify;">
+                <ul style="text-align:justify; font-size: 12px">
                     <li>pregunta: ¿Cual es la capital de Colombia?</li>
                     <li>respuesta: Parce, la capital es Bogota DC.</li>
                     <li>pregunta:¿Cual es la capital de España?</li>
@@ -72,7 +72,7 @@ Procesamiento de lenguaje natural
                     <li>pregunta:¿Cual es la capital de Argentina?</li>
                     <li>respuesta: Pibe, la capital es Buenos aires.</li>
                 </ul>
-                <form action="/gpt3_generate_prompt_by_example" method="POST">
+                <form action="/gpt3_generate_response_prompt_by_example" method="POST">
                     <div class="container">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"

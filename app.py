@@ -37,9 +37,9 @@ def view_dall_e2():
 
 ## ------------------------- API endpoints -----------------------------------------------
 
-## to use all Open AI models
-@app.route("/gpt3_generate_all_text", methods=("GET", "POST"))
-def get_gpt3_all_text():
+## to use all Open AI models using direct prompt
+@app.route("/gpt3_generate_response_direct_prompt", methods=("GET", "POST"))
+def get_gpt3_response_direct_prompt():
     if request.method == "POST":
         prompt = request.form["prompt"]
         ## results from openAI API methods
@@ -55,7 +55,7 @@ def get_gpt3_all_text():
     return render_template("index.html", message=message)
 
 ##Generate response by prompt by example
-@app.route("/gpt3_generate_prompt_by_example", methods=("GET", "POST"))
+@app.route("/gpt3_generate_response_prompt_by_example", methods=("GET", "POST"))
 def get_gpt3_response_by_prompt_example():
     if request.method == "POST":
         prompt2 = request.form["prompt"]
