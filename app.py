@@ -194,8 +194,11 @@ def generate_prompt_by_example(direct_prompt):
         respuesta: Pibe, la capital es Buenos aires.
         pregunta: {}
         respuesta:""".format(
-                direct_prompt.capitalize()
-            )
+            direct_prompt.capitalize()
+        )
+
+## Prompt engineering sample
+# """Imaginate que eres un experto en computacion cuantica, con 25 años de experiencia y ademas eres profesor de educación infantil con 10 años de experiencia. Quiero que le expliques a los niños que es la computacion cuantica de forma facil y comprensible para ellos, teniendo en cuenta que son niños de 6 años y que no comprenden muchos conceptos, puedes dar ejemplos basicos con los juguetes que usan a diario. Si tienes alguna duda, no olvides en preguntar, ¿entendido?."""
 
 ## ------------------------- openAI API Images-------------------------------------------------
 
